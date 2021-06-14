@@ -35,7 +35,7 @@ jobs:
         uses: pr-mpt/actions-assert@v2
         with:
           assertion: npm://@assertions/is-equal
-          expected: "Hello, ${{ github.actor }}!"
+          expected: "Hello, Alice T. Ester!"
           actual: "${{ steps.name.outputs.greeting }}"
       - id: empty
         uses: ./
