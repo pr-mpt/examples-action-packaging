@@ -1,4 +1,4 @@
-name: "Limit Tags To Distributable Branches"
+name: "Limit Tags To Distributable Commits"
 
 on:
   push:
