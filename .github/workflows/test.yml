@@ -18,7 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npm run package
+      - name: Package action for integration tests
+        if: ${{ github.ref != 'refs/heads/release' }}
+        run: npm run package
       - id: default
         uses: ./
       - name: Test actor is greeted by default
