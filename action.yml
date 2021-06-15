@@ -1,0 +1,17 @@
+name: "Example Action"
+branding:
+  icon: "loader"
+  color: "white"
+description: "A simple example action that greets someone"
+author: "Samuel Ryan <sam@samryan.co.uk>"
+inputs:
+  name:
+    description: "Name of the person to greet"
+    default: "${{ github.actor }}"
+    required: true
+outputs:
+  greeting:
+    description: "A greeting for the person"
+runs:
+  using: "node12"
+  main: "dist/index.js"

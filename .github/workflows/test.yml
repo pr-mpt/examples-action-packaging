@@ -1,0 +1,51 @@
+name: "Test Action"
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - name: Execute unit tests
+        run: npm run all
+  test-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run package
+      - id: default
+        uses: ./
+      - name: Test actor is greeted by default
+        uses: pr-mpt/actions-assert@v2
+        with:
+          assertion: npm://@assertions/is-equal
+          expected: "Hello, ${{ github.actor }}!"
+          actual: "${{ steps.default.outputs.greeting }}"
+      - id: name
+        uses: ./
+        with:
+          name: "Alice T. Ester"
+      - name: Test name is greeted
+        uses: pr-mpt/actions-assert@v2
+        with:
+          assertion: npm://@assertions/is-equal
+          expected: "Hello, Alice T. Ester!"
+          actual: "${{ steps.name.outputs.greeting }}"
+      - id: empty
+        uses: ./
+        with:
+          name: ""
+      - name: Test world is greeted when name is empty
+        uses: pr-mpt/actions-assert@v2
+        with:
+          assertion: npm://@assertions/is-equal
+          expected: "Hello, World!"
+          actual: "${{ steps.empty.outputs.greeting }}"
+
+
