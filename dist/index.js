@@ -53,6 +53,7 @@ async function run() {
         const greeter = new greeter_1.Greeter("Hello, {name}!");
         const name = core.getInput("name");
         core.setOutput("greeting", greeter.greet(name));
+        core.debug(`Greeted ${name} using ${JSON.stringify(greeter)}`);
     }
     catch (error) {
         core.setFailed(error.message);
