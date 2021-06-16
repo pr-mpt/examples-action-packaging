@@ -6,8 +6,8 @@ on:
       - "main"
 
 env:
-  source: ${{ secrets.BRANCHES_SOURCE || 'main' }}
-  release: ${{ secrets.BRANCHES_RELEASE || 'release' }}
+  source: "origin/main"
+  release: "release"
 
 jobs:
   update-branch:
@@ -20,4 +20,4 @@ jobs:
           ssh-key: "${{ secrets.COMMIT_KEY }}"
       - uses: pr-mpt/actions-merge-branch@v1
         with:
-          from: "origin/${{ env.source }}"
+          from: "${{ env.source }}"
