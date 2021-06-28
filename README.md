@@ -26,7 +26,8 @@ as an alternative GitHub's recommended strategy.
 
 ### Packaging
 
-* Push changes to `greeter.ts` on `main` and observe `release` is updated with a new `dist` build
+* Push changes to `greeter.ts` on `main` and observe `release` is updated with a
+new `dist` build
 
 ### Tag Validation
 
