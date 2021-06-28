@@ -24,7 +24,7 @@ jobs:
       - id: default
         uses: ./
       - name: Test actor is greeted by default
-        uses: pr-mpt/actions-assert@v2
+        uses: pr-mpt/actions-assert@v3
         with:
           assertion: npm://@assertions/is-equal:v1
           expected: "Hello, ${{ github.actor }}!"
@@ -34,7 +34,7 @@ jobs:
         with:
           name: "Alice T. Ester"
       - name: Test name is greeted
-        uses: pr-mpt/actions-assert@v2
+        uses: pr-mpt/actions-assert@v3
         with:
           assertion: npm://@assertions/is-equal:v1
           expected: "Hello, Alice T. Ester!"
@@ -44,7 +44,7 @@ jobs:
         with:
           name: ""
       - name: Test world is greeted when name is empty
-        uses: pr-mpt/actions-assert@v2
+        uses: pr-mpt/actions-assert@v3
         with:
           assertion: npm://@assertions/is-equal:v1
           expected: "Hello, World!"
