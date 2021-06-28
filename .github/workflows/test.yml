@@ -19,14 +19,14 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install
       - name: Package action for integration tests
-        if: ${{ github.ref != 'refs/heads/release' }}
+        if: ${{ startsWith(github.ref, 'refs/heads/release') }}
         run: npm run package
       - id: default
         uses: ./
       - name: Test actor is greeted by default
         uses: pr-mpt/actions-assert@v2
         with:
-          assertion: npm://@assertions/is-equal
+          assertion: npm://@assertions/is-equal:v1
           expected: "Hello, ${{ github.actor }}!"
           actual: "${{ steps.default.outputs.greeting }}"
       - id: name
@@ -36,7 +36,7 @@ jobs:
       - name: Test name is greeted
         uses: pr-mpt/actions-assert@v2
         with:
-          assertion: npm://@assertions/is-equal
+          assertion: npm://@assertions/is-equal:v1
           expected: "Hello, Alice T. Ester!"
           actual: "${{ steps.name.outputs.greeting }}"
       - id: empty
@@ -46,7 +46,7 @@ jobs:
       - name: Test world is greeted when name is empty
         uses: pr-mpt/actions-assert@v2
         with:
-          assertion: npm://@assertions/is-equal
+          assertion: npm://@assertions/is-equal:v1
           expected: "Hello, World!"
           actual: "${{ steps.empty.outputs.greeting }}"
 
