@@ -3,16 +3,37 @@ name: "Package Action"
 on:
   push:
     branches:
-      - "release"
-      - "release/**"
+      - "main"
+      - "main/**"
+
+env:
+  PREFIX_MAIN: "main"
+  PREFIX_RELEASE: "release"
 
 jobs:
   push-changes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - id: branch
+        uses: tj-actions/branch-names@v4.5
+      - name: Create release branch name from source branch name
+        id: release
+        uses: mad9000/actions-find-and-replace-string@2
         with:
+          source: "${{ steps.branch.outputs.current_branch }}"
+          find: "${{ env.PREFIX_MAIN }}"
+          replace: "${{ env.PREFIX_RELEASE }}"
+      - name: Checkout latest release
+        uses: actions/checkout@v2
+        with:
+          ref: "${{ steps.release.outputs.value }}"
+          fetch-depth: 0
           ssh-key: "${{ secrets.COMMIT_KEY }}"
+      - name: Merge latest changes into release
+        uses: pr-mpt/actions-merge-branch@v2
+        with:
+          from: "${{ steps.branch.outputs.current_branch }}"
+          push: false
       - name: Install Javascript dependencies with npm
         run: npm install
       - name: Package action for distribution
@@ -21,5 +42,6 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           add: "dist --force"
+          branch: "${{ steps.release.outputs.value }}"
           default_author: github_actions
           message: "build: Package action as `dist` with latest changes"

@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
+        if: "!startsWith(github.ref, 'refs/heads/release')"
       - name: Package action for integration tests
         if: "!startsWith(github.ref, 'refs/heads/release')"
         run: npm run package
