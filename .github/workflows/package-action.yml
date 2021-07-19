@@ -6,7 +6,7 @@ on:
       - "main"
 
 env:
-  source: "origin/main"
+  source: "main"
   release: "release"
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
           ssh-key: "${{ secrets.COMMIT_KEY }}"
       - uses: pr-mpt/actions-merge-branch@v2
         with:
-          from: "${{ env.source }}"
+          from: "origin/${{ env.source }}"
           commit: false
       - name: Install Javascript dependencies with npm
         run: npm install
@@ -29,6 +29,7 @@ jobs:
       - name: Push packaged action to branch
         uses: EndBug/add-and-commit@v7
         with:
-          add: "dist --force"
+          add: "['.', 'dist --force']"
+          branch: "${{ env.release }}"
           default_author: github_actions
           message: "build: Package action as `dist` with latest changes"
