@@ -7,6 +7,7 @@ on:
       - "version/**"
 
 env:
+  DEFAULT_BRANCH: "main"
   PREFIX_RELEASE: "release"
   PREFIX_VERSION: "version"
 
@@ -21,8 +22,8 @@ jobs:
         uses: mad9000/actions-find-and-replace-string@2
         with:
           source: "${{ steps.branch.outputs.current_branch }}"
-          find: "${{ env.PREFIX_VERSION }}"
-          replace: "${{ env.PREFIX_RELEASE }}"
+          find: "(${{ env.DEFAULT_BRANCH }}$|${{ env.PREFIX_VERSION }})(\/?)"
+          replace: "${{ env.PREFIX_RELEASE }}$2"
       - name: Checkout latest release
         uses: actions/checkout@v2
         with:
