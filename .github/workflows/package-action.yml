@@ -3,16 +3,25 @@ name: "Package Action"
 on:
   push:
     branches:
-      - "release"
-      - "release/**"
+      - "main"
+
+env:
+  source: "origin/main"
+  release: "release"
 
 jobs:
-  push-changes:
+  package-changes:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
+          ref: "${{ env.release }}"
+          fetch-depth: 0
           ssh-key: "${{ secrets.COMMIT_KEY }}"
+      - uses: pr-mpt/actions-merge-branch@v2
+        with:
+          from: "${{ env.source }}"
+          commit: false
       - name: Install Javascript dependencies with npm
         run: npm install
       - name: Package action for distribution
