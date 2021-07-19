@@ -49,6 +49,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(186));
 const greeter_1 = __webpack_require__(111);
 async function run() {
+    core.debug("Running greeter action.");
     try {
         const greeter = new greeter_1.Greeter("Hello, {name}!");
         const name = core.getInput("name");
